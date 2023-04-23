@@ -1,18 +1,12 @@
 const express = require("express");
 const app = express();
-const PORT = 8083;
 const videosRoutes = require("./routes/videos");
 const cors = require('cors');
-
+require('dotenv').config()
+const { PORT } = process.env
 
 app.use(cors())
 app.use(express.json());
-
-
-app.use((req, res, next) => {
-    console.log(`it's working!`);
-    next();
-})
 
 
 app.use("/videos", videosRoutes);

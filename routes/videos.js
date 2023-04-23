@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 function readVideosFile() {
-    const videosList = fs.readFileSync("../data/videos.json");
+    const videosList = fs.readFileSync("./data/videos.json");
     const parsedData = JSON.parse(videosList);
     return parsedData;
 }
@@ -15,10 +15,16 @@ router.get("/", (req,res)=>{
     res.json(videos);
 });
 
-router.get("/:id", (req,res)=>{
-    findId = videoList.findIndex((video)=> video.id === req.params.id);
-    res.json(videoList(findId));
-});
+router.get("/:id", (req, res) => {
+    const videos = readVideosFile();
+    const findId = videos.findIndex((video) => video.id === req.params.id);
+    if (findId === -1) {
+      res.status(404).send("Video not found");
+    } else {
+      res.json(videos[findId]);
+    }
+  });
+  
 
 router.post("/", (req,res)=>{
     console.log(req.body);
@@ -31,7 +37,7 @@ router.post("/", (req,res)=>{
 
     const videos = readVideosFile();
     videos.push(newVideo);
-    fs.writeFileSync("../data/videos.json", JSON.stringify(videos));
+    fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
     res.status(201).json(newVideo);   
 });
