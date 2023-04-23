@@ -15,21 +15,25 @@ router.get("/", (req,res)=>{
     res.json(videos);
 });
 
+router.get("/:id", (req,res)=>{
+    findId = videoList.findIndex((video)=> video.id === req.params.id);
+    res.json(videoList(findId));
+});
+
 router.post("/", (req,res)=>{
     console.log(req.body);
     const newVideo ={
         id:uuidv4(),
+        image:req.body.image,
         title: req.body.title, 
         channel: req.body.channel,
-        image:req.body.image,
     };
 
     const videos = readVideosFile();
     videos.push(newVideo);
-    fs.readFileSync("../data/videos.json", JSON.stringify(videos));
+    fs.writeFileSync("../data/videos.json", JSON.stringify(videos));
 
     res.status(201).json(newVideo);   
-
 });
 
 module.exports = router;
