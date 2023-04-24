@@ -50,7 +50,7 @@ router.post("/", (req, res) => {
       {
         "id": "0002",
         "name":"Celia Mae",
-        "comment": "Mike... stop commenting random things on peoples videos. Where are you? You need to come home now! Also, were married...?",
+        "comment": "Mike... stop commenting random things on peoples' videos. Where are you? You need to come home now! Also, were married...?",
         "likes": 6000,
         "timestamp": Date.now()
       }
